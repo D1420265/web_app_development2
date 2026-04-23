@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h4 class="mb-0 fw-bold">新增單字</h4>
+            </div>
+            <div class="card-body p-4 bg-white">
+                <form action="{{ url_for('main.create_word') }}" method="POST">
+                    <div class="mb-4">
+                        <label for="english" class="form-label fw-bold text-secondary">英文單字 (English)</label>
+                        <input type="text" class="form-control form-control-lg" id="english" name="english" placeholder="例如：apple" required autofocus>
+                    </div>
+                    <div class="mb-4">
+                        <label for="chinese" class="form-label fw-bold text-secondary">中文翻譯 (Chinese)</label>
+                        <input type="text" class="form-control form-control-lg" id="chinese" name="chinese" placeholder="例如：蘋果" required>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold">💾 儲存單字</button>
+                        <a href="{{ url_for('main.index') }}" class="btn btn-light text-muted">返回列表</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

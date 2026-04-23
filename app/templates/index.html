@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-3 align-items-center">
+    <div class="col">
+        <h2 class="fw-bold">{% if query %}「{{ query }}」的搜尋結果{% else %}總單字庫{% endif %}</h2>
+    </div>
+    <div class="col-auto">
+        <a href="{{ url_for('main.new_word') }}" class="btn btn-primary">+ 新增單字</a>
+    </div>
+</div>
+
+{% if words %}
+<div class="table-responsive">
+    <table class="table table-hover bg-white shadow-sm rounded border overflow-hidden">
+        <thead class="table-light">
+            <tr>
+                <th style="width: 30%">英文 (English)</th>
+                <th style="width: 30%">中文 (Chinese)</th>
+                <th style="width: 20%">建立時間</th>
+                <th style="width: 20%" class="text-center">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for word in words %}
+            <tr>
+                <td class="align-middle fw-bold fs-5 text-primary">{{ word.english }}</td>
+                <td class="align-middle fs-5">{{ word.chinese }}</td>
+                <td class="align-middle text-muted small">{{ word.created_at[:16] }}</td>
+                <td class="align-middle text-center">
+                    <div class="d-flex justify-content-center gap-2">
+                        <!-- 加入收藏按鈕 -->
+                        <form action="{{ url_for('user.add_to_collection') }}" method="POST">
+                            <input type="hidden" name="word_id" value="{{ word.id }}">
+                            <button type="submit" class="btn btn-sm btn-outline-success">⭐ 收藏</button>
+                        </form>
+                        <!-- 刪除按鈕 -->
+                        <form action="{{ url_for('main.delete_word', id=word.id) }}" method="POST" onsubmit="return confirm('確定要刪除「{{ word.english }}」嗎？這會同時刪除所有人的收藏紀錄。');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">🗑️ 刪除</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info text-center mt-4 shadow-sm">
+    {% if query %}
+        <h4 class="alert-heading mt-2">找不到結果</h4>
+        <p>找不到包含「{{ query }}」的單字。</p>
+    {% else %}
+        <h4 class="alert-heading mt-2">單字庫是空的</h4>
+        <p>目前系統內還沒有任何單字，趕快來新增第一個單字吧！</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
