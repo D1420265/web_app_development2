@@ -35,7 +35,7 @@
                             <button type="submit" class="btn btn-sm btn-outline-success">⭐ 收藏</button>
                         </form>
                         <!-- 刪除按鈕 -->
-                        <form action="{{ url_for('main.delete_word', id=word.id) }}" method="POST" onsubmit="return confirm('確定要刪除「{{ word.english }}」嗎？這會同時刪除所有人的收藏紀錄。');">
+                        <form action="{{ url_for('main.delete_word', id=word.id) }}" method="POST">
                             <button type="submit" class="btn btn-sm btn-outline-danger">🗑️ 刪除</button>
                         </form>
                     </div>
